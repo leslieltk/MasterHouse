@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "332143019502",
+    "firebase_url": "https://masterhouse-edbe1.firebaseio.com",
+    "project_id": "masterhouse-edbe1",
+    "storage_bucket": "masterhouse-edbe1.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:332143019502:android:764a99385f6bf072",
+        "android_client_info": {
+          "package_name": "com.uowfyp.masterhouse"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "332143019502-ssqnr6bji6p3p3c4a7g85m5bh2d5o6p1.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.uowfyp.masterhouse",
+            "certificate_hash": "8760c71f53fe11b627a7477241747c9b69677be1"
+          }
+        },
+        {
+          "client_id": "332143019502-0drirdtp9593c4bsb1e2qj03insdpcrv.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDvpR5LAxlQadzblvQ0AmZdxizv12gl5yc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "332143019502-0drirdtp9593c4bsb1e2qj03insdpcrv.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
