@@ -46,7 +46,7 @@
             app:layout_constraintVertical_chainStyle="packed" />
 
         <TextView
-            android:id="@+id/postUsername2"
+            android:id="@+id/postUsername"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="12dp"
@@ -61,7 +61,7 @@
             app:layout_constraintTop_toTopOf="@+id/postImg" />
 
         <TextView
-            android:id="@+id/postUsername"
+            android:id="@+id/postTitle"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
 
@@ -81,12 +81,12 @@
             android:text="postDate"
             android:textAppearance="@style/TextAppearance.AppCompat.Body2"
             android:textSize="8sp"
-            app:layout_constraintEnd_toEndOf="@+id/postUsername2"
-            app:layout_constraintStart_toStartOf="@+id/postUsername2"
-            app:layout_constraintTop_toBottomOf="@+id/postUsername2" />
+            app:layout_constraintEnd_toEndOf="@+id/postUsername"
+            app:layout_constraintStart_toStartOf="@+id/postUsername"
+            app:layout_constraintTop_toBottomOf="@+id/postUsername" />
 
         <TextView
-            android:id="@+id/postTitle"
+            android:id="@+id/postDesc"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
@@ -96,9 +96,9 @@
             android:textAppearance="@style/TextAppearance.AppCompat.Body1"
             android:textSize="12sp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="@+id/postUsername"
+            app:layout_constraintEnd_toEndOf="@+id/postTitle"
             app:layout_constraintStart_toStartOf="@+id/postImg"
-            app:layout_constraintTop_toBottomOf="@+id/postUsername" />
+            app:layout_constraintTop_toBottomOf="@+id/postTitle" />
 
     </android.support.constraint.ConstraintLayout>
 

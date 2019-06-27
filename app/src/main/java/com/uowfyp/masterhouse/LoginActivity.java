@@ -51,7 +51,7 @@ public class LoginActivity extends AppCompatActivity {
             public  void  onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth){
                 FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
                 if(user!=null){
-                    Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
+                    Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                     startActivity(intent);
                     finish();
                 }
@@ -82,7 +82,7 @@ public class LoginActivity extends AppCompatActivity {
                             //loading.setVisibility(View.GONE);
                             if (task.isSuccessful()){
                                 FirebaseUser user = auth.getCurrentUser();
-                                startActivity(new Intent(LoginActivity.this, HomeActivity.class));
+                                startActivity(new Intent(LoginActivity.this, MainActivity.class));
                                 finish();
                             }else {
                                 txtEmail.setError("");

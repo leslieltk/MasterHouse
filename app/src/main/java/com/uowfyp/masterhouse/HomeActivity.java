@@ -2,15 +2,20 @@ package com.uowfyp.masterhouse;
 
 import android.content.Intent;
 import android.support.annotation.NonNull;
-import android.support.design.widget.BottomNavigationView;
+import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
+import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.support.v7.widget.SearchView;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ProgressBar;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -23,67 +28,65 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
-public class HomeActivity extends AppCompatActivity {
+public class HomeActivity extends Fragment {
     //Fragment {
 
-    private static final String TAG = "HomeActivity";
+    private static final String TAG = "HomeActivity>>>>>>>>>>>>>>>>>>>>>>>>>>>>";
+    private static final String TAG2 = "HomeActivity22>>>>>>>>>>>>>>>>>>>>>>>>>>>>>";
 
     RecyclerView postList;
     ArrayList<Post> list;
     ProgressBar loading;
     Post post = new Post();
     Post post2 = new Post();
-
     View.OnClickListener onClickListener = new View.OnClickListener() {
         @Override
-        public void onClick(View v) { // onclick function to pass the key to the single view activity
+        public void onClick(View v) {
             RecyclerView.ViewHolder viewHolder = (RecyclerView.ViewHolder) v.getTag();
             int position = viewHolder.getAdapterPosition();
 
             post = list.get(position);
-            Intent intent = new Intent(HomeActivity.this, PostDetailActivity.class);
-            intent.putExtra("key",post.getKey()); // get the post key from Firebase database and pass the key
+            Intent intent = new Intent(getActivity(), PostDetailActivity.class);
+            intent.putExtra("key",post.getKey());
             startActivity(intent);
         }
     };
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_home);
-
-//    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-//                             Bundle savedInstanceState) {
-//        View rootView = inflater.inflate(R.layout.activity_home, container, false);
-//        postList = (RecyclerView)rootView.findViewById(R.id.postList);
-//        loading = (ProgressBar)rootView.findViewById(R.id.loading3);
-//        postList.setLayoutManager(new LinearLayoutManager(getActivity()));
-//        postList.setHasFixedSize(true);
-//        setHasOptionsMenu(true);
-
-        postList = (RecyclerView) findViewById(R.id.postList);
-        loading = (ProgressBar) findViewById(R.id.loading3);
-        postList.setLayoutManager(new LinearLayoutManager(HomeActivity.this));
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        View rootView = inflater.inflate(R.layout.fragment_home, container, false);
+        postList = (RecyclerView)rootView.findViewById(R.id.postList);
+        loading = (ProgressBar)rootView.findViewById(R.id.loading3);
+        postList.setLayoutManager(new LinearLayoutManager(getActivity()));
         postList.setHasFixedSize(true);
 
-        BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
-        navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
+        setHasOptionsMenu(true);
+        Toolbar toolbar = (Toolbar)rootView.findViewById(R.id.homebar);
+        ((AppCompatActivity)getActivity()).setSupportActionBar(toolbar);
 
-        Query dbReff = FirebaseDatabase.getInstance().getReference("Posts"); // order the data by int
+        getActivity().setTitle("");
+
+        Query dbReff = FirebaseDatabase.getInstance().getReference(); // order the data by int
         final DatabaseReference dbreff2 = FirebaseDatabase.getInstance().getReference("Users");
 
         if (dbReff != null) {
             loading.setVisibility(View.VISIBLE);
             list = new ArrayList<Post>();
-            dbReff.addValueEventListener(new ValueEventListener() {
+            dbReff.addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                    if (dataSnapshot.exists()) {
-
-
-                        for (final DataSnapshot dsnap : dataSnapshot.getChildren()) {
+                    DataSnapshot postdata = dataSnapshot.child("Posts");
+                    DataSnapshot userdata = dataSnapshot.child("Users");
+                    if (postdata.exists()) {
+                        for (DataSnapshot dsnap : postdata.getChildren()) {
                             post2 = dsnap.getValue(Post.class);
                             post2.setKey(dsnap.getKey().toString());
+                            for (DataSnapshot dsnap2: userdata.getChildren()){
+                                if (dsnap.child("uid").getValue().toString().equals(dsnap2.getKey())){
+                                    post2.setUsername(dsnap2.child("firstName").getValue().toString());
+                                }
+                            }
                             list.add(post2);
                         }
                         loading.setVisibility(View.GONE);
@@ -97,9 +100,48 @@ public class HomeActivity extends AppCompatActivity {
                 public void onCancelled(@NonNull DatabaseError databaseError) {
                 }
             });
-
         }
+        return rootView;
+    }
 
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.menu_main, menu);
+//        getMenuInflater().inflate(R.menu.menu_main, menu);
+        MenuItem searchItem = menu.findItem(R.id.searchBar);
+        SearchView searchView = (SearchView) searchItem.getActionView();
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String s) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String s) {
+                search(s);
+                return true;
+            }
+        });
+         super.onCreateOptionsMenu(menu, inflater);
+//        super.onCreateOptionsMenu(menu);
+
+    }
+
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        switch (item.getItemId()) {
+            case R.id.action_add:
+                startActivity(new Intent(getActivity(), CreatePostActivity.class));
+                break;
+            case R.id.menuLogout:
+                FirebaseAuth.getInstance().signOut();
+                startActivity(new Intent(getActivity(), LoginActivity.class));
+                getActivity().finish();
+                break;
+            default:
+                break;
+        }
+        return super.onOptionsItemSelected(item);
 
     }
 
@@ -115,66 +157,5 @@ public class HomeActivity extends AppCompatActivity {
         postList.setAdapter(adapter);
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-//        inflater.inflate(R.menu.menu_search, menu);  //for Fragment function
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        MenuItem searchItem = menu.findItem(R.id.searchBar);
-        SearchView searchView = (SearchView) searchItem.getActionView();
-        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-            @Override
-            public boolean onQueryTextSubmit(String s) {
-                return false;
-            }
-
-            @Override
-            public boolean onQueryTextChange(String s) {
-                search(s);
-                return true;
-            }
-        });
-//         super.onCreateOptionsMenu(menu, inflater);
-        super.onCreateOptionsMenu(menu);
-
-        return true;
-    }
-
-    public boolean onOptionsItemSelected(MenuItem item) {
-
-        switch (item.getItemId()) {
-            case R.id.action_add:
-                startActivity(new Intent(HomeActivity.this, CreatePostActivity.class));
-                break;
-            case R.id.menuProfile:
-                startActivity(new Intent(HomeActivity.this, ProfileActivity.class));
-                break;
-            case R.id.menuLogout:
-                FirebaseAuth.getInstance().signOut();
-                startActivity(new Intent(HomeActivity.this, LoginActivity.class));
-                break;
-            default:
-                break;
-        }
-        return super.onOptionsItemSelected(item);
-
-    }
-
-    private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
-            = new BottomNavigationView.OnNavigationItemSelectedListener() {
-
-        @Override
-        public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-            switch (item.getItemId()) {
-                case R.id.navigation_home:
-                    return true;
-                case R.id.navigation_dashboard:
-                    return true;
-                case R.id.navigation_notifications:
-                    startActivity(new Intent(HomeActivity.this, ProfileActivity.class));
-                    return true;
-            }
-            return false;
-        }
-    };
 
 }

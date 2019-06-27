@@ -9,6 +9,7 @@ public class User {
   public String phone;
   public String gender;
   public String img;
+  public String like;
 
     public User() {
     }
@@ -75,5 +76,13 @@ public class User {
 
     public void setImg(String img) {
         this.img = img;
+    }
+
+    public String getLike() {
+        return like;
+    }
+
+    public void setLike(String like) {
+        this.like = like;
     }
 }

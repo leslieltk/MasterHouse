@@ -2,11 +2,15 @@ package com.uowfyp.masterhouse;
 
 import android.content.Intent;
 import android.support.annotation.NonNull;
-import android.support.design.widget.BottomNavigationView;
-import android.support.v7.app.AppCompatActivity;
+import android.support.design.widget.TabLayout;
+import android.support.v4.app.Fragment;
 import android.os.Bundle;
-import android.view.MenuItem;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.view.ViewPager;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -19,43 +23,49 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-public class ProfileActivity extends AppCompatActivity {
+import java.util.ArrayList;
+import java.util.List;
+
+public class ProfileActivity extends Fragment {
+
+    private static final String TAG = "Profile>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>";
 
     TextView tvEmail, tvName, tvDate;
     Button btnlogout;
     ProgressBar loading;
     FirebaseAuth auth;
     FirebaseAuth.AuthStateListener authStateListener;
-    DatabaseReference dbreff;
-    User user;
+    DatabaseReference dbreff, likereff, postReff;
+    private ViewPager mViewPager;
+
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_profile);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
 
-//        View rootView = inflater.inflate(R.layout.activity_profile, container, false);
-//        auth = FirebaseAuth.getInstance();a
-//        tvEmail = (TextView)rootView.findViewById(R.id.tvemail);
-//        tvName = (TextView)rootView.findViewById(R.id.tvname);
-//        btnlogout = (Button)rootView.findViewById(R.id.btnlogout);
-//        loading = (ProgressBar)rootView.findViewById(R.id.loading2);
-//        tvDate  = (TextView)rootView.findViewById(R.id.tvdate);
+//        Fragment UserLike = new UserLike();
+//        FragmentTransaction transaction = getChildFragmentManager().beginTransaction();
+//        transaction.add(R.id.viewpager, UserLike).commit();
 
+        View rootView = inflater.inflate(R.layout.fragment_profile, container, false);
         auth = FirebaseAuth.getInstance();
-        tvEmail = (TextView)findViewById(R.id.tvemail);
-        tvName = (TextView)findViewById(R.id.tvname);
-        btnlogout = (Button)findViewById(R.id.btnlogout);
-        loading = (ProgressBar)findViewById(R.id.loading2);
-        tvDate  = (TextView)findViewById(R.id.tvdate);
-        user = new User();
+        tvEmail = (TextView) rootView.findViewById(R.id.tvemail);
+        tvName = (TextView) rootView.findViewById(R.id.tvname);
+        btnlogout = (Button) rootView.findViewById(R.id.btnlogout);
+        loading = (ProgressBar) rootView.findViewById(R.id.loading2);
+        tvDate = (TextView) rootView.findViewById(R.id.tvdate);
 
-        BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
-        navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
-        //textView.setText(getString(R.string.section_format, getArguments().getInt(ARG_SECTION_NUMBER)));
+        ViewPager mViewPager = (ViewPager) rootView.findViewById(R.id.viewpager);
+        setupViewPager(mViewPager);
+        TabLayout tabLayout = (TabLayout) rootView.findViewById(R.id.result_tabs);
+        tabLayout.setupWithViewPager(mViewPager);
+
+        mViewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
+        tabLayout.addOnTabSelectedListener(new TabLayout.ViewPagerOnTabSelectedListener(mViewPager));
+
 
         FirebaseUser authuser = FirebaseAuth.getInstance().getCurrentUser();
-        if (authuser != null){
+        if (authuser != null) {
             loading.setVisibility(View.VISIBLE);
             String email = authuser.getEmail();
             String uid = authuser.getUid();
@@ -67,11 +77,10 @@ public class ProfileActivity extends AppCompatActivity {
                     String lastName = dataSnapshot.child("lastName").getValue().toString();
                     firstName = firstName.toUpperCase();
                     lastName = lastName.toUpperCase();
-                    tvName.setText(firstName +" "+lastName);
+                    tvName.setText(firstName + " " + lastName);
                     tvName.setTextSize(20);
-                    loading.setVisibility(View.GONE);
-
                 }
+
                 @Override
                 public void onCancelled(@NonNull DatabaseError databaseError) {
 
@@ -79,33 +88,59 @@ public class ProfileActivity extends AppCompatActivity {
             });
             boolean emailVerified = authuser.isEmailVerified();
             tvEmail.setText(email);
+            loading.setVisibility(View.GONE);
 
         }
+
 
         btnlogout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 FirebaseAuth.getInstance().signOut();
-                startActivity(new Intent(ProfileActivity.this, LoginActivity.class));
-                finish();
+                startActivity(new Intent(getActivity(), LoginActivity.class));
             }
         });
+
+        return rootView;
+
     }
-    private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
-            = new BottomNavigationView.OnNavigationItemSelectedListener() {
+
+    private void setupViewPager(ViewPager viewPager) {
+
+
+        Adapter adapter = new Adapter(getChildFragmentManager());
+        adapter.addFragment(new UserLike(), "Your Like");
+        adapter.addFragment(new HomeActivity(), "Your Post");
+        adapter.addFragment(new UserApplied(), "Your Applied");
+        viewPager.setAdapter(adapter);
+    }
+
+    static class Adapter extends FragmentPagerAdapter {
+        private final List<Fragment> mFragmentList = new ArrayList<>();
+        private final List<String> mFragmentTitleList = new ArrayList<>();
+
+        public Adapter(FragmentManager manager) {
+            super(manager);
+        }
 
         @Override
-        public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-            switch (item.getItemId()) {
-                case R.id.navigation_home:
-                    startActivity(new Intent(ProfileActivity.this, HomeActivity.class));
-                    return true;
-                case R.id.navigation_dashboard:
-                    return true;
-                case R.id.navigation_notifications:
-                    return true;
-            }
-            return false;
+        public Fragment getItem(int position) {
+            return mFragmentList.get(position);
         }
-    };
+
+        @Override
+        public int getCount() {
+            return mFragmentList.size();
+        }
+
+        public void addFragment(Fragment fragment, String title) {
+            mFragmentList.add(fragment);
+            mFragmentTitleList.add(title);
+        }
+
+        @Override
+        public CharSequence getPageTitle(int position) {
+            return mFragmentTitleList.get(position);
+        }
+    }
 }

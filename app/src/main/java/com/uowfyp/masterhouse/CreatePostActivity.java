@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -16,12 +17,15 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.util.Calendar;
+
 public class CreatePostActivity extends AppCompatActivity {
 
-    EditText etxtTitle, etxtDescription;
+    EditText etxtTitle, etxtDescription, etxtSalary;
+    Spinner spinnerLocation, spinnerType;
     Button btnAdd;
     Post addPost;
-//    FirebaseAuth auth;
+    //    FirebaseAuth auth;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -29,6 +33,10 @@ public class CreatePostActivity extends AppCompatActivity {
 
         etxtTitle = (EditText)findViewById(R.id.newpostTitle);
         etxtDescription = (EditText)findViewById(R.id.etxtDescription);
+        spinnerLocation = (Spinner)findViewById(R.id.spinnerLocation);
+        spinnerType = (Spinner)findViewById(R.id.spinnerType);
+        etxtSalary = (EditText)findViewById(R.id.etxtSalary);
+
         btnAdd = (Button)findViewById(R.id.btnAdd);
         addPost = new Post();
 
@@ -36,19 +44,25 @@ public class CreatePostActivity extends AppCompatActivity {
         final FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         final String uid = user.getUid();
         final DatabaseReference dbReff = FirebaseDatabase.getInstance().getReference("Posts");
+        final String date = java.text.DateFormat.getDateTimeInstance().format(Calendar.getInstance().getTime());
 
         btnAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 addPost.setTitle(etxtTitle.getText().toString());
                 addPost.setDescription(etxtDescription.getText().toString());
+                addPost.setLocation(spinnerLocation.getSelectedItem().toString());
+                addPost.setSalary(etxtSalary.getText().toString());
+                addPost.setType(spinnerType.getSelectedItem().toString());
                 addPost.setUid(uid);
+                addPost.setPostDate(date);
                 dbReff.push().setValue(addPost).addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
                         if (task.isSuccessful()){
                             Toast.makeText(CreatePostActivity.this,"Post created",Toast.LENGTH_LONG).show();
-                            startActivity(new Intent(CreatePostActivity.this, HomeActivity.class));
+                            startActivity(new Intent(CreatePostActivity.this, MainActivity.class));
+                            finish();
                         }
                     }
                 });

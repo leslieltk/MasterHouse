@@ -38,6 +38,7 @@ public class RecycleViewAdapter extends RecyclerView.Adapter<RecycleViewAdapter.
 
     @Override
     public void onBindViewHolder(@NonNull viewHolder viewHolder, final int position) {
+        viewHolder.postUsername.setText(list.get(position).getUsername());
         viewHolder.postTitle.setText(list.get(position).getTitle());
         viewHolder.postDesc.setText(list.get(position).getDescription());
         viewHolder.postSubTitle.setText((list.get(position).getUid()));
@@ -69,19 +70,18 @@ public class RecycleViewAdapter extends RecyclerView.Adapter<RecycleViewAdapter.
 
     class viewHolder extends RecyclerView.ViewHolder {
         CardView parentLayout;
-        TextView postTitle, postDesc, postSubTitle;
+        TextView postTitle, postDesc, postSubTitle, postUsername;
         Button btnApply;
 
         public viewHolder(@NonNull View itemView) {
             super(itemView);
-            postTitle = (TextView) itemView.findViewById(R.id.postUsername);
-            postDesc = (TextView) itemView.findViewById(R.id.postTitle);
+            postUsername = (TextView)itemView.findViewById(R.id.postUsername);
+            postTitle = (TextView) itemView.findViewById(R.id.postTitle);
+            postDesc = (TextView) itemView.findViewById(R.id.postDesc);
             postSubTitle = (TextView)itemView.findViewById(R.id.postDate);
             parentLayout = (CardView)itemView.findViewById(R.id.parent_layout);
             itemView.setTag(this);
-            postDesc.setOnClickListener(mOnItemClickListener);
-
-
+            itemView.setOnClickListener(mOnItemClickListener);
 
         }
     }

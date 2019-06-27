@@ -220,14 +220,16 @@
         android:text="Apply"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/button5" />
+        app:layout_constraintStart_toEndOf="@+id/btnlike" />
 
     <Button
-        android:id="@+id/button5"
+        android:id="@+id/btnlike"
         android:layout_width="50dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
         android:background="@drawable/ic_favorite_border_red_600_24dp"
+        android:text="notlike"
+        android:textSize="0sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/postApply" />
 
