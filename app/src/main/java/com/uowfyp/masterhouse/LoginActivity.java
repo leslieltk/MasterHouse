@@ -21,7 +21,6 @@ public class LoginActivity extends AppCompatActivity {
 
     Button btnRegister, btnLogin;
     EditText txtEmail, txtPwd;
-    ProgressBar loading;
     FirebaseAuth auth;
     ProgressDialog progressDialog;
     FirebaseAuth.AuthStateListener mAuthListener;
@@ -85,9 +84,8 @@ public class LoginActivity extends AppCompatActivity {
                                 startActivity(new Intent(LoginActivity.this, MainActivity.class));
                                 finish();
                             }else {
-                                txtEmail.setError("");
+                                txtEmail.setError(task.getException().getLocalizedMessage());
                                 txtPwd.setError("");
-                                Toast.makeText(LoginActivity.this, task.getException().getMessage(), Toast.LENGTH_LONG).show();
                             }
                             progressDialog.dismiss();
                          }
