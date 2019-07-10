@@ -6,103 +6,164 @@
     android:layout_height="match_parent"
     tools:context=".CreatePostActivity">
 
-    <android.support.design.widget.TextInputLayout
-        android:id="@+id/tetlayoutlocation"
+    <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        app:errorEnabled="true"
-        app:layout_constraintTop_toBottomOf="@+id/tetlayoutdescription"
-        tools:layout_editor_absoluteX="0dp">
-
-        <Spinner
-            android:id="@+id/spinnerLocation"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:entries="@array/location" />
-    </android.support.design.widget.TextInputLayout>
-
-    <android.support.design.widget.TextInputLayout
-        android:id="@+id/tetlayoutsalary"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
-        app:errorEnabled="true"
-        app:layout_constraintTop_toBottomOf="@+id/tetlayoutlocation"
-        tools:layout_editor_absoluteX="0dp">
-
-        <android.support.design.widget.TextInputEditText
-            android:id="@+id/etxtSalary"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:ems="10"
-            android:hint="Salary"
-            android:inputType="textPersonName" />
-    </android.support.design.widget.TextInputLayout>
-
-    <android.support.design.widget.TextInputLayout
-        android:id="@+id/tetlayouttype"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        app:errorEnabled="true"
-        app:layout_constraintTop_toBottomOf="@+id/tetlayoutsalary"
-        tools:layout_editor_absoluteX="0dp">
-
-        <Spinner
-            android:id="@+id/spinnerType"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:entries="@array/type" />
-    </android.support.design.widget.TextInputLayout>
-
-    <android.support.design.widget.TextInputLayout
-        android:id="@+id/tetlayoutdescription"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        app:errorEnabled="true"
-        app:layout_constraintTop_toBottomOf="@+id/tetlayouttitle"
-        tools:layout_editor_absoluteX="16dp">
-
-        <android.support.design.widget.TextInputEditText
-            android:id="@+id/etxtDescription"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:ems="10"
-            android:hint="Description"
-            android:inputType="textPersonName"
-            android:textColor="@color/black" />
-    </android.support.design.widget.TextInputLayout>
-
-    <android.support.design.widget.TextInputLayout
-        android:id="@+id/tetlayouttitle"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        app:errorEnabled="true"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="16dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:layout_editor_absoluteX="16dp">
+        app:layout_constraintVertical_bias="0.0">
 
-        <android.support.design.widget.TextInputEditText
-            android:id="@+id/newpostTitle"
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/tetlayout"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            android:background="@drawable/border"
+            android:hint="Location"
+            app:errorEnabled="true"
+            app:layout_constraintBottom_toBottomOf="@+id/tetlayoutsalary"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toEndOf="@+id/tetlayoutsalary"
+            app:layout_constraintTop_toTopOf="@+id/tetlayoutsalary">
+
+            <Spinner
+                android:id="@+id/he"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:entries="@array/location" />
+        </android.support.design.widget.TextInputLayout>
+
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/tetlayouttype"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:ems="10"
-            android:hint="Title"
-            android:inputType="textPersonName" />
-    </android.support.design.widget.TextInputLayout>
+            android:layout_marginTop="8dp"
+            android:background="@drawable/border"
+            android:hint="Mission Category"
+            app:errorEnabled="true"
+            app:layout_constraintTop_toBottomOf="@+id/tetlayoutsalary"
+            tools:layout_editor_absoluteX="0dp">
 
-    <Button
-        android:id="@+id/btnAdd"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
-        android:text="Add"
-        app:layout_constraintTop_toBottomOf="@+id/tetlayouttype"
-        tools:layout_editor_absoluteX="0dp" />
+            <Spinner
+                android:id="@+id/spinnerType"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:entries="@array/category" />
+        </android.support.design.widget.TextInputLayout>
+
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/tetlayouttitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/border"
+            android:hint="Title"
+            app:errorEnabled="true"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <android.support.design.widget.TextInputEditText
+                android:id="@+id/newpostTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:ems="10"
+                android:inputType="textPersonName" />
+        </android.support.design.widget.TextInputLayout>
+
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/tetlayoutsalary"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/border"
+            app:errorEnabled="true"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tetlayoutlocation">
+
+            <android.support.design.widget.TextInputEditText
+                android:id="@+id/etxtSalary"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:ems="10"
+                android:hint="Price"
+                android:inputType="textPersonName"
+                android:phoneNumber="true" />
+        </android.support.design.widget.TextInputLayout>
+
+        <Button
+            android:id="@+id/btnAdd"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            android:background="@drawable/round_button"
+            android:text="Add"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tetlayouttype" />
+
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/tetlayoutdescription"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/border"
+            app:errorEnabled="true"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tetlayouttitle">
+
+            <android.support.design.widget.TextInputEditText
+                android:id="@+id/etxtDescription"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:ems="10"
+                android:hint="Description"
+                android:inputType="textPersonName"
+                android:textColor="@color/black" />
+        </android.support.design.widget.TextInputLayout>
+
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/tetlayoutlocation"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/border"
+            android:hint="Location"
+            app:errorEnabled="true"
+            app:layout_constraintTop_toBottomOf="@+id/tetlayoutdescription">
+
+            <Spinner
+                android:id="@+id/spinnerLocation"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:entries="@array/location" />
+        </android.support.design.widget.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            app:layout_constraintTop_toBottomOf="@+id/btnAdd">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:hint="tetx" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+    </android.support.constraint.ConstraintLayout>
 
 </android.support.constraint.ConstraintLayout>

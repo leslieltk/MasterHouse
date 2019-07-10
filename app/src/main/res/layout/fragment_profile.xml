@@ -97,6 +97,7 @@
             app:layout_constraintTop_toBottomOf="@+id/tvemail" />
 
         <android.support.constraint.ConstraintLayout
+            android:id="@+id/constraintLayout5"
             android:layout_width="match_parent"
             android:layout_height="42dp"
             android:background="@color/colorPrimary"
@@ -140,6 +141,16 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.498"
             app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <Button
+            android:id="@+id/btn_setting"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:background="@drawable/ic_settings_black_24dp"
+            app:layout_constraintEnd_toEndOf="@+id/constraintLayout5"
             app:layout_constraintTop_toTopOf="parent" />
 
     </android.support.constraint.ConstraintLayout>

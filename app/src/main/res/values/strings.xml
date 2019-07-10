@@ -14,7 +14,6 @@
     <string name="title_activity_porfileboard">porfileboard</string>
 
     <string-array name="location">
-        <item>Please Select</item>
         <item>Central and Western</item>
         <item>Wan Chai</item>
         <item>Eastern</item>
@@ -35,8 +34,7 @@
         <item>Islands</item>
     </string-array>
 
-    <string-array name="type">
-        <item>Please Select</item>
+    <string-array name="category">
         <item>House Services</item>
         <item>Education</item>
         <item>Shipping</item>

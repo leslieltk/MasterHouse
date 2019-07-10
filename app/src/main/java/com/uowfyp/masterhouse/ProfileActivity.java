@@ -28,10 +28,10 @@ import java.util.List;
 
 public class ProfileActivity extends Fragment {
 
-    private static final String TAG = "Profile>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>";
+    private static final String TAG = "ProfileActivity-Log";
 
     TextView tvEmail, tvName, tvDate;
-    Button btnlogout;
+    Button btnlogout, btnsetting;
     ProgressBar loading;
     FirebaseAuth auth;
     FirebaseAuth.AuthStateListener authStateListener;
@@ -54,6 +54,7 @@ public class ProfileActivity extends Fragment {
         btnlogout = (Button) rootView.findViewById(R.id.btnlogout);
         loading = (ProgressBar) rootView.findViewById(R.id.loading2);
         tvDate = (TextView) rootView.findViewById(R.id.tvdate);
+        btnsetting = (Button)rootView.findViewById(R.id.btn_setting);
 
         ViewPager mViewPager = (ViewPager) rootView.findViewById(R.id.viewpager);
         setupViewPager(mViewPager);
@@ -92,6 +93,13 @@ public class ProfileActivity extends Fragment {
 
         }
 
+        btnsetting.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getActivity(), EditProfileActivity.class));
+            }
+        });
+
 
         btnlogout.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -109,9 +117,8 @@ public class ProfileActivity extends Fragment {
 
 
         Adapter adapter = new Adapter(getChildFragmentManager());
-        adapter.addFragment(new UserLike(), "Your Like");
         adapter.addFragment(new HomeActivity(), "Your Post");
-        adapter.addFragment(new UserApplied(), "Your Applied");
+        adapter.addFragment(new HomeActivity(), "About");
         viewPager.setAdapter(adapter);
     }
 

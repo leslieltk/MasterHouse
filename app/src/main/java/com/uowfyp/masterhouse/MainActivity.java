@@ -47,7 +47,8 @@ public class MainActivity extends AppCompatActivity {
                     fm = new HomeActivity();
                     break;
                 case R.id.navigation_dashboard:
-                    return true;
+                    fm = new favouriteActivity();
+                    break;
                 case R.id.navigation_Profile:
                     fm = new ProfileActivity();
                     break;
