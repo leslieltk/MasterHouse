@@ -20,9 +20,9 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
-public class UserLike extends Fragment {
+public class UserPost extends Fragment {
 
-    User user = new User();;
+    User user = new User();
     MissionPost missionPost = new MissionPost();
     RecyclerView postList;
     ArrayList<MissionPost> list;
@@ -50,23 +50,22 @@ public class UserLike extends Fragment {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                     DataSnapshot dspost = dataSnapshot.child("Posts");
-                    DataSnapshot dslike = dataSnapshot.child("Users").child(auth.getCurrentUser().getUid()).child("likes");
+                    DataSnapshot dsuserpost = dataSnapshot.child("Users").child(auth.getCurrentUser().getUid()).child("posts");
                     DataSnapshot userdata = dataSnapshot.child("Users");
 
                     if (dataSnapshot.exists()) {
+                        for (final DataSnapshot dsnapuserpost : dsuserpost.getChildren()) {
+                            String postKey = dsnapuserpost.getKey();
 
-                        for (final DataSnapshot dsnap : dslike.getChildren()) {
-                            String postKey = dsnap.getKey();
+                            for (final DataSnapshot dsnappost : dspost.getChildren()) {
 
-                            for (final DataSnapshot dsnap2 : dspost.getChildren()) {
-
-                                if (dsnap2.getKey().equals(postKey)) {
-                                    missionPost = dsnap2.getValue(MissionPost.class);
-                                    missionPost.setKey(dsnap.getKey().toString());
+                                if (dsnappost.getKey().equals(postKey)) {
+                                    missionPost = dsnappost.getValue(MissionPost.class);
+                                    missionPost.setKey(dsnapuserpost.getKey().toString());
 
                                     for (DataSnapshot dsnap3: userdata.getChildren()){
 
-                                        if (dsnap2.child("uid").getValue().toString().equals(dsnap3.getKey())){
+                                        if (dsnappost.child("uid").getValue().toString().equals(dsnap3.getKey())){
                                             missionPost.setUsername(dsnap3.child("firstName").getValue().toString());
                                         }
                                     }

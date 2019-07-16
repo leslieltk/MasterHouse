@@ -1,7 +1,9 @@
 package com.uowfyp.masterhouse;
 
-import android.support.annotation.NonNull;
-import android.support.v7.app.AppCompatActivity;
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -15,7 +17,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -24,39 +26,71 @@ public class PostDetailActivity extends AppCompatActivity {
 
     private static final String TAG = "PostDetailActivity";
 
-    String postId = null;
+    String postKey = null;
     DatabaseReference postReff, userReff;
-    TextView tvTitle, tvDesc;
-    Button btnApply, btnlike;
+    TextView tvTitle, tvDesc, tvcategory, tvlocation, tvsalary, tvdate;
+    Button btnApply, btnlike, btnPostSetting;
     FirebaseAuth auth;
     Calendar calendar = Calendar.getInstance();
-    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy.MM.dd,HH:mm:ss");
+    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
     String currentTime = dateFormat.format(calendar.getTime());
+    String time, s;
+    MissionPost missionPost = new MissionPost();
+    Date d1, d2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_post_details);
 
-        postId = getIntent().getExtras().getString("key");  //get the post key from other activity
+        postKey = getIntent().getExtras().getString("postKey");  //get the missionPost key from other activity
 
         auth = FirebaseAuth.getInstance();
-        postReff = FirebaseDatabase.getInstance().getReference("Posts").child(postId);
+        postReff = FirebaseDatabase.getInstance().getReference("Posts").child(postKey);
         userReff = FirebaseDatabase.getInstance().getReference("Users").child(auth.getCurrentUser().getUid());
 
         tvTitle = (TextView)findViewById(R.id.postTitle);
         tvDesc = (TextView)findViewById(R.id.tvDesc);
         btnApply = (Button)findViewById(R.id.postApply);
         btnlike = (Button)findViewById(R.id.btnlike);
+        tvcategory = (TextView)findViewById(R.id.tvcategory);
+        tvlocation = (TextView)findViewById(R.id.tvlocation);
+        tvsalary = (TextView)findViewById(R.id.tvsalary);
+        tvdate = (TextView)findViewById(R.id.tvdate);
+        btnPostSetting = (Button)findViewById(R.id.btnPostSetting);
 
         postReff.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                missionPost = dataSnapshot.getValue(MissionPost.class);
+                try {
+                    d1 = dateFormat.parse(dataSnapshot.child("date").getValue().toString());
+                    d2 = dateFormat.parse(currentTime);
+                    long diff = d1.getTime() - d2.getTime();
+                    long diffSeconds = diff / 1000;
+                    long diffMinutes = diff / (60 * 1000);
+                    long diffHours = diff / (60 * 60 * 1000);
+                    s = String.valueOf(diffHours);
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
                 postDerailDisplay(dataSnapshot);
+                enableSetting(missionPost.getUid());
+
             }
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
 
+            }
+        });
+
+
+        btnPostSetting.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(PostDetailActivity.this, CreateMissionActivity.class);
+                intent.putExtra("key", missionPost.getKey());
+                startActivity(intent);
             }
         });
 
@@ -89,13 +123,13 @@ public class PostDetailActivity extends AppCompatActivity {
 
     private void likeClicked() {
         if (btnlike.getText().equals("notlike")) {
-            userReff.child("likes").child(postId).setValue(true);
+            userReff.child("likes").child(postKey).setValue(true);
             postReff.child("likes").child(auth.getCurrentUser().getUid()).setValue(true);
             btnlike.setBackgroundResource(R.drawable.ic_favorite_red_600_24dp);
             btnlike.setText("likes");
             Toast.makeText(PostDetailActivity.this, "Like", Toast.LENGTH_SHORT).show();
         } else if (btnlike.getText().equals("like")) {
-            userReff.child("likes").child(postId).removeValue();
+            userReff.child("likes").child(postKey).removeValue();
             postReff.child("likes").child(auth.getCurrentUser().getUid()).removeValue();
             btnlike.setBackgroundResource(R.drawable.ic_favorite_border_red_600_24dp);
             btnlike.setText("notlike");
@@ -105,7 +139,7 @@ public class PostDetailActivity extends AppCompatActivity {
 
     private void checkUserLiked(DataSnapshot dataSnapshot){
         if(dataSnapshot.exists()){
-            if (dataSnapshot.child("likes").hasChild(postId)) {
+            if (dataSnapshot.child("likes").hasChild(postKey)) {
                 btnlike.setBackgroundResource(R.drawable.ic_favorite_red_600_24dp);
                 btnlike.setText("like");
             }
@@ -114,14 +148,33 @@ public class PostDetailActivity extends AppCompatActivity {
 
     private void applyClicked(){
         postReff.child("applicant").child(auth.getCurrentUser().getUid()).setValue(currentTime);
-        userReff.child("applied").child(postId).setValue(currentTime);
+        userReff.child("applied").child(postKey).setValue(currentTime);
         Toast.makeText(PostDetailActivity.this, "Apply a Mission", Toast.LENGTH_SHORT).show();
     }
 
 
     private void postDerailDisplay(DataSnapshot dataSnapshot){
-        tvTitle.setText(dataSnapshot.child("title").getValue().toString());
+        tvTitle.setText(missionPost.getTitle());
         tvDesc.setText(dataSnapshot.child("description").getValue().toString());
+        tvcategory.setText(missionPost.getCategory());
+        tvlocation.setText(missionPost.getLocation());
+        tvsalary.setText("$" + missionPost.getPrice());
+        tvdate.setText(missionPost.getDate());
+
+    }
+
+    private void enableSetting(String postUid){
+        if(postUid.equals(auth.getCurrentUser().getUid().toString())){
+            btnPostSetting.setVisibility(View.VISIBLE);
+            btnPostSetting.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent = new Intent(PostDetailActivity.this, EditMissionActivity.class);
+                    intent.putExtra("postKey", postKey);
+                    startActivity(intent);
+                }
+            });
+        }
     }
 
     @Override

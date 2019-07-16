@@ -1,11 +1,11 @@
 package com.uowfyp.masterhouse;
 
 import android.content.Intent;
-import android.support.annotation.NonNull;
-import android.support.v4.app.Fragment;
+import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
 import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,11 +22,10 @@ import java.util.ArrayList;
 
 public class UserApplied extends Fragment {
 
-    User user;
-    Post post = new Post();
-    Post post2 = new Post();
+    User user = new User();
+    MissionPost missionPost = new MissionPost();
     RecyclerView postList;
-    ArrayList<Post> list;
+    ArrayList<MissionPost> list;
     DatabaseReference postReff;
     ProgressBar loading;
     FirebaseAuth auth;
@@ -38,39 +37,43 @@ public class UserApplied extends Fragment {
 
         postList = (RecyclerView)rootView.findViewById(R.id.postList);
         postList.setLayoutManager(new LinearLayoutManager(getActivity()));
-        loading = (ProgressBar)rootView.findViewById(R.id.loading2);
-        user = new User();
+        loading = (ProgressBar)rootView.findViewById(R.id.loading3);
         postList.setHasFixedSize(true);
 
         auth = FirebaseAuth.getInstance();
 
         postReff = FirebaseDatabase.getInstance().getReference();
         if (postReff.child("Posts")!= null){
-            list = new ArrayList<Post>();
+            list = new ArrayList<MissionPost>();
             postReff.addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                     DataSnapshot dspost = dataSnapshot.child("Posts");
-                    DataSnapshot dslike = dataSnapshot.child("Users").child(auth.getCurrentUser().getUid()).child("applied");
+                    DataSnapshot dsapply = dataSnapshot.child("Users").child(auth.getCurrentUser().getUid()).child("applied");
                     DataSnapshot userdata = dataSnapshot.child("Users");
 
                     if (dataSnapshot.exists()) {
-                        for (final DataSnapshot dsnap : dslike.getChildren()) {
+
+                        for (final DataSnapshot dsnap : dsapply.getChildren()) {
                             String postKey = dsnap.getKey();
+
                             for (final DataSnapshot dsnap2 : dspost.getChildren()) {
+
                                 if (dsnap2.getKey().equals(postKey)) {
-                                    post2 = dsnap2.getValue(Post.class);
-                                    post2.setKey(dsnap.getKey().toString());
+                                    missionPost = dsnap2.getValue(MissionPost.class);
+                                    missionPost.setKey(dsnap.getKey().toString());
+
                                     for (DataSnapshot dsnap3: userdata.getChildren()){
+
                                         if (dsnap2.child("uid").getValue().toString().equals(dsnap3.getKey())){
-                                            post2.setUsername(dsnap3.child("firstName").getValue().toString());
+                                            missionPost.setUsername(dsnap3.child("firstName").getValue().toString());
                                         }
                                     }
-                                    list.add(post2);
+                                    list.add(missionPost);
                                 }
                             }
                         }
-//                        loading.setVisibility(View.GONE);
+                        loading.setVisibility(View.GONE);
                         RecycleViewAdapter adapter = new RecycleViewAdapter(list);
                         postList.setAdapter(adapter);
                         adapter.setOnItemClickListener(onClickListener);
@@ -92,9 +95,9 @@ public class UserApplied extends Fragment {
             RecyclerView.ViewHolder viewHolder = (RecyclerView.ViewHolder) v.getTag();
             int position = viewHolder.getAdapterPosition();
 
-            post = list.get(position);
+            missionPost = list.get(position);
             Intent intent = new Intent(getActivity(), PostDetailActivity.class);
-            intent.putExtra("key",post.getKey()); // get the post key from Firebase database and pass the key
+            intent.putExtra("key", missionPost.getKey()); // get the missionPost key from Firebase database and pass the key
             startActivity(intent);
         }
     };

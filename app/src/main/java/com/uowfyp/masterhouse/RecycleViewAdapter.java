@@ -2,9 +2,9 @@ package com.uowfyp.masterhouse;
 
 import android.content.Context;
 import android.graphics.Color;
-import android.support.annotation.NonNull;
-import android.support.v7.widget.CardView;
-import android.support.v7.widget.RecyclerView;
+import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
+import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,13 +18,13 @@ import java.util.ArrayList;
 
 public class RecycleViewAdapter extends RecyclerView.Adapter<RecycleViewAdapter.viewHolder> {
     private static final String TAG = "HomeActivity";
-    ArrayList<Post> list;
-    Post post = new Post();
+    ArrayList<MissionPost> list;
+    MissionPost missionPost = new MissionPost();
     Context mcontext;
     View.OnClickListener mOnItemClickListener;
     DatabaseReference dreff;
 
-    public RecycleViewAdapter( ArrayList<Post> list) {
+    public RecycleViewAdapter( ArrayList<MissionPost> list) {
         this.list = list;
     }
 
@@ -41,7 +41,7 @@ public class RecycleViewAdapter extends RecyclerView.Adapter<RecycleViewAdapter.
         viewHolder.postUsername.setText(list.get(position).getUsername());
         viewHolder.postTitle.setText(list.get(position).getTitle());
         viewHolder.postDesc.setText(list.get(position).getDescription());
-        viewHolder.postSubTitle.setText((list.get(position).getUid()));
+        viewHolder.postSubTitle.setText((list.get(position).getDate()));
         ReadMoreOption readMoreOption = new ReadMoreOption.Builder(mcontext)
                 .moreLabel("Show More")
                 .lessLabel("Show Less")
@@ -71,7 +71,7 @@ public class RecycleViewAdapter extends RecyclerView.Adapter<RecycleViewAdapter.
     class viewHolder extends RecyclerView.ViewHolder {
         CardView parentLayout;
         TextView postTitle, postDesc, postSubTitle, postUsername;
-        Button btnApply;
+        Button btnlike;
 
         public viewHolder(@NonNull View itemView) {
             super(itemView);
@@ -80,8 +80,11 @@ public class RecycleViewAdapter extends RecyclerView.Adapter<RecycleViewAdapter.
             postDesc = (TextView) itemView.findViewById(R.id.postDesc);
             postSubTitle = (TextView)itemView.findViewById(R.id.postDate);
             parentLayout = (CardView)itemView.findViewById(R.id.parent_layout);
+            btnlike = (Button)itemView.findViewById(R.id.btnslike);
             itemView.setTag(this);
             itemView.setOnClickListener(mOnItemClickListener);
+            btnlike.setTag(this);
+            btnlike.setOnClickListener(mOnItemClickListener);
 
         }
     }

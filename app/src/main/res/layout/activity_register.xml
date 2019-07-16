@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".RegisterActivity">
 
-    <android.support.constraint.ConstraintLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginStart="16dp"
@@ -18,7 +18,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <android.support.design.widget.TextInputLayout
+        <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/txtlayoutfname"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -27,16 +27,16 @@
             app:layout_constraintTop_toTopOf="parent"
             tools:layout_editor_absoluteX="0dp">
 
-            <android.support.design.widget.TextInputEditText
+            <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/etxtFirstname"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ems="10"
                 android:hint="First Name"
                 android:inputType="textPersonName" />
-        </android.support.design.widget.TextInputLayout>
+        </com.google.android.material.textfield.TextInputLayout>
 
-        <android.support.design.widget.TextInputLayout
+        <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/txtlayoutlanme"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -45,16 +45,16 @@
             app:layout_constraintTop_toBottomOf="@+id/txtlayoutfname"
             tools:layout_editor_absoluteX="0dp">
 
-            <android.support.design.widget.TextInputEditText
+            <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/etxtLastname"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ems="10"
                 android:hint="Last Name"
                 android:inputType="textPersonName" />
-        </android.support.design.widget.TextInputLayout>
+        </com.google.android.material.textfield.TextInputLayout>
 
-        <android.support.design.widget.TextInputLayout
+        <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/txtlayoutphone"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -63,17 +63,17 @@
             app:layout_constraintTop_toBottomOf="@+id/txtlayoutlanme"
             tools:layout_editor_absoluteX="0dp">
 
-            <android.support.design.widget.TextInputEditText
+            <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/etxtPhone"
                 android:layout_width="match_parent"
                 android:layout_height="45dp"
                 android:ems="10"
                 android:hint="Phone Number"
                 android:inputType="number" />
-        </android.support.design.widget.TextInputLayout>
+        </com.google.android.material.textfield.TextInputLayout>
 
-        <android.support.design.widget.TextInputLayout
-            android:id="@+id/tetlayoutemail"
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/txtlayoutemail"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
@@ -81,33 +81,33 @@
             app:layout_constraintTop_toBottomOf="@+id/txtlayoutphone"
             tools:layout_editor_absoluteX="0dp">
 
-            <android.support.design.widget.TextInputEditText
+            <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/etxtEmail2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ems="10"
                 android:hint="Email"
                 android:inputType="textEmailAddress" />
-        </android.support.design.widget.TextInputLayout>
+        </com.google.android.material.textfield.TextInputLayout>
 
-        <android.support.design.widget.TextInputLayout
+        <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/txtlayoutpassword"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             app:errorEnabled="true"
-            app:layout_constraintTop_toBottomOf="@+id/tetlayoutemail"
+            app:layout_constraintTop_toBottomOf="@+id/txtlayoutemail"
             app:passwordToggleEnabled="true"
             tools:layout_editor_absoluteX="16dp">
 
-            <android.support.design.widget.TextInputEditText
+            <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/etxtPwd2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ems="10"
                 android:hint="Password"
                 android:inputType="textPassword" />
-        </android.support.design.widget.TextInputLayout>
+        </com.google.android.material.textfield.TextInputLayout>
 
 
         <Button
@@ -136,6 +136,6 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.539" />
 
-    </android.support.constraint.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
-</android.support.constraint.ConstraintLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

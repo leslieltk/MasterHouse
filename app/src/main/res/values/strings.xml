@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">MasterHouse</string>
     <string name="title_activity_main">MainActivity</string>
@@ -14,6 +15,7 @@
     <string name="title_activity_porfileboard">porfileboard</string>
 
     <string-array name="location">
+        <item>Please Select</item>
         <item>Central and Western</item>
         <item>Wan Chai</item>
         <item>Eastern</item>
@@ -35,10 +37,52 @@
     </string-array>
 
     <string-array name="category">
+        <item>Please Select</item>
         <item>House Services</item>
         <item>Education</item>
         <item>Shipping</item>
         <item>Production</item>
         <item>Technological</item>
     </string-array>
+
+    <string-array name="priceType">
+        <item>each time</item>
+        <item>per hour</item>
+    </string-array>
+
+    <string-array name="week">
+        <item>Monday</item>
+        <item>Tuesday</item>
+        <item>Wednesday</item>
+        <item>Thursday</item>
+        <item>Friday</item>
+        <item>Saturday</item>
+        <item>Sunday</item>
+    </string-array>
+
+    <string-array name="hour">
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+        <item>6</item>
+        <item>7</item>
+        <item>8</item>
+        <item>9</item>
+        <item>10</item>
+        <item>11</item>
+        <item>12</item>
+    </string-array>
+
+    <string-array name="minute">
+        <item>00</item>
+        <item>30</item>
+    </string-array>
+
+    <string-array name="clock_format">
+        <item>am</item>
+        <item>pm</item>
+    </string-array>
+
 </resources>

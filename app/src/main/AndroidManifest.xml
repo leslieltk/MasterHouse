@@ -9,7 +9,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".favouriteActivity"></activity>
+        <activity android:name=".EditMissionActivity"></activity>
+        <activity android:name=".ScheduleActivity" />
+        <activity android:name=".UserPost" />
+        <activity android:name=".favouriteActivity" />
         <activity android:name=".StartActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -29,14 +32,14 @@
             android:name=".EditProfileActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".CreatePostActivity"
+            android:name=".CreateMissionActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".HomeActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".LoginActivity"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ProfileActivity"
             android:screenOrientation="portrait"

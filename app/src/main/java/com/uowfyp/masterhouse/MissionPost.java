@@ -1,28 +1,28 @@
 package com.uowfyp.masterhouse;
 
-public class Post {
-    String name;
+public class MissionPost {
     String key;
     String title;
     String uid;
-    String postDate;
+    String date;
     String description;
     String location;
-    String salary;
-    String type;
+    String price;
+    String priceType;
+    String category;
     String username;
 
-    public Post(){
+    public MissionPost(){
     }
 
-    public Post( String key, String title, String description, String uid, String location, String salary, String type, String username) {
+    public MissionPost(String key, String title, String description, String uid, String location, String price, String type, String username) {
         this.key = key;
         this.title = title;
         this.description = description;
         this.uid = uid;
         this.location = location;
-        this.salary = salary;
-        this.type = type;
+        this.price = price;
+        this.category = type;
         this.username = username;
     }
 
@@ -50,12 +50,12 @@ public class Post {
         this.uid = uid;
     }
 
-    public String getPostDate() {
-        return postDate;
+    public String getDate() {
+        return date;
     }
 
-    public void setPostDate(String postDate) {
-        this.postDate = postDate;
+    public void setDate(String date) {
+        this.date = date;
     }
 
     public String getDescription() {
@@ -74,20 +74,20 @@ public class Post {
         this.location = location;
     }
 
-    public String getSalary() {
-        return salary;
+    public String getPrice() {
+        return price;
     }
 
-    public void setSalary(String salary) {
-        this.salary = salary;
+    public void setPrice(String price) {
+        this.price = price;
     }
 
-    public String getType() {
-        return type;
+    public String getPriceType() {
+        return priceType;
     }
 
-    public void setType(String type) {
-        this.type = type;
+    public void setPriceType(String priceType) {
+        this.priceType = priceType;
     }
 
     public String getUsername() {
@@ -96,5 +96,13 @@ public class Post {
 
     public void setUsername(String username) {
         this.username = username;
+    }
+
+    public String getCategory() {
+        return category;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
     }
 }

@@ -1,9 +1,8 @@
 package com.uowfyp.masterhouse;
 
 import android.content.Intent;
-import android.media.Image;
 import android.os.CountDownTimer;
-import android.support.v7.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -35,15 +34,10 @@ public class StartActivity extends AppCompatActivity {
             public void onFinish() {
                 Intent intent = new Intent(StartActivity.this, LoginActivity.class);
                 startActivity(intent);
+                finish();
 
             }
         }.start();
 
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        finish();
     }
 }

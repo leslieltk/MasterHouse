@@ -1,169 +1,179 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".CreatePostActivity">
+    android:background="@color/background"
+    tools:context=".CreateMissionActivity">
 
-    <android.support.constraint.ConstraintLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginBottom="16dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="8dp"
+        android:background="@drawable/rounded_rectangle"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0">
-
-        <android.support.design.widget.TextInputLayout
-            android:id="@+id/tetlayout"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginEnd="8dp"
-            android:background="@drawable/border"
-            android:hint="Location"
-            app:errorEnabled="true"
-            app:layout_constraintBottom_toBottomOf="@+id/tetlayoutsalary"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toEndOf="@+id/tetlayoutsalary"
-            app:layout_constraintTop_toTopOf="@+id/tetlayoutsalary">
-
-            <Spinner
-                android:id="@+id/he"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:entries="@array/location" />
-        </android.support.design.widget.TextInputLayout>
-
-        <android.support.design.widget.TextInputLayout
-            android:id="@+id/tetlayouttype"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:background="@drawable/border"
-            android:hint="Mission Category"
-            app:errorEnabled="true"
-            app:layout_constraintTop_toBottomOf="@+id/tetlayoutsalary"
-            tools:layout_editor_absoluteX="0dp">
-
-            <Spinner
-                android:id="@+id/spinnerType"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:entries="@array/category" />
-        </android.support.design.widget.TextInputLayout>
-
-        <android.support.design.widget.TextInputLayout
-            android:id="@+id/tetlayouttitle"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:background="@drawable/border"
-            android:hint="Title"
-            app:errorEnabled="true"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
-
-            <android.support.design.widget.TextInputEditText
-                android:id="@+id/newpostTitle"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:ems="10"
-                android:inputType="textPersonName" />
-        </android.support.design.widget.TextInputLayout>
-
-        <android.support.design.widget.TextInputLayout
-            android:id="@+id/tetlayoutsalary"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:background="@drawable/border"
-            app:errorEnabled="true"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tetlayoutlocation">
-
-            <android.support.design.widget.TextInputEditText
-                android:id="@+id/etxtSalary"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:ems="10"
-                android:hint="Price"
-                android:inputType="textPersonName"
-                android:phoneNumber="true" />
-        </android.support.design.widget.TextInputLayout>
-
-        <Button
-            android:id="@+id/btnAdd"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="32dp"
-            android:background="@drawable/round_button"
-            android:text="Add"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tetlayouttype" />
-
-        <android.support.design.widget.TextInputLayout
-            android:id="@+id/tetlayoutdescription"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:background="@drawable/border"
-            app:errorEnabled="true"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tetlayouttitle">
-
-            <android.support.design.widget.TextInputEditText
-                android:id="@+id/etxtDescription"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:ems="10"
-                android:hint="Description"
-                android:inputType="textPersonName"
-                android:textColor="@color/black" />
-        </android.support.design.widget.TextInputLayout>
-
-        <android.support.design.widget.TextInputLayout
-            android:id="@+id/tetlayoutlocation"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:background="@drawable/border"
-            android:hint="Location"
-            app:errorEnabled="true"
-            app:layout_constraintTop_toBottomOf="@+id/tetlayoutdescription">
-
-            <Spinner
-                android:id="@+id/spinnerLocation"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:entries="@array/location" />
-        </android.support.design.widget.TextInputLayout>
+        app:layout_constraintVertical_bias="1.0">
 
         <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/txtTitleLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            app:layout_constraintTop_toBottomOf="@+id/btnAdd">
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="24dp"
+            android:layout_marginEnd="8dp"
+            android:hint="Mission Title"
+            app:errorEnabled="true"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvTitle">
 
             <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etTitle"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:hint="tetx" />
+                android:layout_height="wrap_content" />
+
         </com.google.android.material.textfield.TextInputLayout>
 
-    </android.support.constraint.ConstraintLayout>
+        <TextView
+            android:id="@+id/tvTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="32dp"
+            android:layout_marginEnd="8dp"
+            android:text="New Mission Details"
+            android:textSize="18sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-</android.support.constraint.ConstraintLayout>
+        <Spinner
+            android:id="@+id/spinnerCategory"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="24dp"
+            android:entries="@array/category"
+            android:spinnerMode="dropdown"
+            app:layout_constraintStart_toEndOf="@+id/textView8"
+            app:layout_constraintTop_toBottomOf="@+id/txtTitleLayout" />
+
+        <TextView
+            android:id="@+id/textView8"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:text="Category: "
+            android:textSize="18sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/spinnerCategory" />
+
+        <TextView
+            android:id="@+id/textView9"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="32dp"
+            android:text="Location: "
+            android:textSize="18sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView8" />
+
+        <Spinner
+            android:id="@+id/spinnerLocation"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:entries="@array/location"
+            app:layout_constraintStart_toStartOf="@+id/spinnerCategory"
+            app:layout_constraintTop_toTopOf="@+id/textView9" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/txtPriceLayout"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="24dp"
+            android:layout_marginEnd="8dp"
+            android:hint="Price"
+            app:layout_constraintEnd_toStartOf="@+id/spinnerPriceType"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/spinnerLocation">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etPrice"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="number"
+                android:maxLength="8"
+                android:textSize="14sp" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <Spinner
+            android:id="@+id/spinnerPriceType"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:entries="@array/priceType"
+            app:layout_constraintEnd_toEndOf="@+id/spinnerLocation"
+            app:layout_constraintTop_toTopOf="@+id/txtPriceLayout" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/txtDescriptionLayout"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:layout_marginEnd="8dp"
+            android:hint="Mission Description"
+            app:counterEnabled="true"
+            app:counterMaxLength="250"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/txtPriceLayout"
+            app:layout_constraintTop_toBottomOf="@+id/txtPriceLayout">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etDescription"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:maxLength="250"
+                android:textSize="14sp" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnSumbit"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="32dp"
+            android:layout_marginEnd="8dp"
+            android:text="Sumbit"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/txtDescriptionLayout" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnDelete"
+            style="@style/Widget.MaterialComponents.Button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="24dp"
+            android:backgroundTint="#E91E63"
+            android:text="Delete"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.498"
+            app:layout_constraintStart_toStartOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,13 +1,13 @@
 package com.uowfyp.masterhouse;
 
 import android.content.Intent;
-import android.support.annotation.NonNull;
-import android.support.design.widget.TabLayout;
-import android.support.v4.app.Fragment;
+import androidx.annotation.NonNull;
+import com.google.android.material.tabs.TabLayout;
+import androidx.fragment.app.Fragment;
 import android.os.Bundle;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.view.ViewPager;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentPagerAdapter;
+import androidx.viewpager.widget.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -34,18 +34,13 @@ public class ProfileActivity extends Fragment {
     Button btnlogout, btnsetting;
     ProgressBar loading;
     FirebaseAuth auth;
-    FirebaseAuth.AuthStateListener authStateListener;
     DatabaseReference dbreff, likereff, postReff;
-    private ViewPager mViewPager;
 
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-//        Fragment UserLike = new UserLike();
-//        FragmentTransaction transaction = getChildFragmentManager().beginTransaction();
-//        transaction.add(R.id.viewpager, UserLike).commit();
 
         View rootView = inflater.inflate(R.layout.fragment_profile, container, false);
         auth = FirebaseAuth.getInstance();
@@ -117,8 +112,8 @@ public class ProfileActivity extends Fragment {
 
 
         Adapter adapter = new Adapter(getChildFragmentManager());
-        adapter.addFragment(new HomeActivity(), "Your Post");
-        adapter.addFragment(new HomeActivity(), "About");
+        adapter.addFragment(new UserPost(), "Your MissionPost");
+        adapter.addFragment(new ScheduleActivity(), "About");
         viewPager.setAdapter(adapter);
     }
 
