@@ -16,6 +16,7 @@ import androidx.appcompat.widget.SearchView;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -42,13 +43,14 @@ public class HomeActivity extends Fragment {
     View.OnClickListener onClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            RecyclerView.ViewHolder viewHolder = (RecyclerView.ViewHolder) v.getTag();
-            int position = viewHolder.getAdapterPosition();
 
-            missionPost = postlist.get(position);
-            Intent intent = new Intent(getActivity(), PostDetailActivity.class);
-            intent.putExtra("postKey", missionPost.getKey());
-            startActivity(intent);
+                RecyclerView.ViewHolder viewHolder = (RecyclerView.ViewHolder) v.getTag();
+                int position = viewHolder.getAdapterPosition();
+                missionPost = postlist.get(position);
+                Intent intent = new Intent(getActivity(), PostDetailActivity.class);
+                intent.putExtra("postKey", missionPost.getKey());
+                startActivity(intent);
+
         }
     };
 
@@ -90,6 +92,9 @@ public class HomeActivity extends Fragment {
 
                                 if (dsnap.child("uid").getValue().toString().equals(dsnap2.getKey())){
                                     missionPost2.setUsername(dsnap2.child("firstName").getValue().toString());
+                                }
+                                if (dsnap2.child("likes").hasChild(dsnap.getKey())){
+                                    missionPost2.setIslike(true);
                                 }
                             }
                             postlist.add(missionPost2);

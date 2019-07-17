@@ -11,6 +11,7 @@ public class MissionPost {
     String priceType;
     String category;
     String username;
+    boolean islike;
 
     public MissionPost(){
     }
@@ -104,5 +105,13 @@ public class MissionPost {
 
     public void setCategory(String category) {
         this.category = category;
+    }
+
+    public boolean isIslike() {
+        return islike;
+    }
+
+    public void setIslike(boolean islike) {
+        this.islike = islike;
     }
 }

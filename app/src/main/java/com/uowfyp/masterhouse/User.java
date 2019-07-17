@@ -10,6 +10,7 @@ public class User {
   public String gender;
   public String img;
   public String like;
+  public String createDate;
 
     public User() {
     }
@@ -81,8 +82,19 @@ public class User {
     public String getLike() {
         return like;
     }
-
     public void setLike(String like) {
         this.like = like;
     }
+
+    public String getCreateDate() {
+        return createDate;
+    }
+
+    public void setCreateDate(String createDate) {
+        this.createDate = createDate;
+    }
 }
+
+
+
+

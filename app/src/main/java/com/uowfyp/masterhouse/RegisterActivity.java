@@ -1,14 +1,19 @@
 package com.uowfyp.masterhouse;
 
+import android.app.DatePickerDialog;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -18,16 +23,24 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+
 public class RegisterActivity extends AppCompatActivity {
 
-    EditText etxtEmail, etxtPwd, etxtFirstname, etxtLastname, etxtPhone;
-    Button btnNext;
+    EditText etxtEmail, etxtPwd, etxtFirstname, etxtLastname, etxtPhone, etUsername;
+    Spinner spinnerGender;
+    Button btnNext, btnbirthday;
     ProgressBar loading;
     FirebaseAuth auth;
     //FirebaseAuth.AuthStateListener authStateListener;
     DatabaseReference dbReff;
     ProgressDialog progressDialog;
     User user;
+    Calendar calendar = Calendar.getInstance();
+    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+    final String currentTime = dateFormat.format(calendar.getTime());
+    DatePickerDialog.OnDateSetListener listener;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,8 +52,29 @@ public class RegisterActivity extends AppCompatActivity {
         etxtPhone = (EditText)findViewById(R.id.etxtPhone);
         etxtEmail = (EditText)findViewById(R.id.etxtEmail2);
         etxtPwd = (EditText)findViewById(R.id.etxtPwd2);
-        btnNext = (Button)findViewById(R.id.btnNext);
+        btnNext = (Button)findViewById(R.id.btnRegister);
         loading = (ProgressBar)findViewById(R.id.loading2);
+        etUsername = (EditText)findViewById(R.id.etUsername);
+        spinnerGender = (Spinner)findViewById(R.id.spinnerGender);
+        btnbirthday = (Button)findViewById(R.id.btnbirthday);
+
+        btnbirthday.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                int year = calendar.get(calendar.YEAR);
+                int month = calendar.get(calendar.MONTH);
+                int day = calendar.get(calendar.DAY_OF_MONTH);
+
+                DatePickerDialog dialog = new DatePickerDialog(
+                        RegisterActivity.this,
+                        android.R.style.Theme_Holo_Light_Dialog_MinWidth,
+                        listener,
+                        year,month,day);
+                dialog.show();
+            }
+        });
+
 
         user = new User();
 
@@ -51,13 +85,15 @@ public class RegisterActivity extends AppCompatActivity {
 
             @Override
             public void onClick(View v) {
-                if (vaildateEmail() && vaildatePassword() && validateFirstName() && validateLastName() && validatePhone()) {
+                if (validateFirstName() && validateLastName() && vaildateUsername()  && validatePhone() &&  vaildateEmail() && vaildatePassword() ) {
 
                     final String email = etxtEmail.getText().toString().trim();
                     final String password = etxtPwd.getText().toString().trim();
                     final String firstName = etxtFirstname.getText().toString().trim();
                     final String lastName = etxtLastname.getText().toString().trim();
                     final String phoneNum = etxtPhone.getText().toString().trim();
+                    final String username = etUsername.getText().toString().trim();
+                    final String gender = spinnerGender.getSelectedItem().toString();
 
                     auth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                     // store the email and password to firebase
@@ -70,6 +106,9 @@ public class RegisterActivity extends AppCompatActivity {
                                 user.setFirstName(firstName);
                                 user.setLastName(lastName);
                                 user.setPhone(phoneNum);
+                                user.setUsername(username);
+                                user.setCreateDate(currentTime);
+                                user.setGender(gender);
 
                                 FirebaseDatabase.getInstance().getReference("Users").child(auth.getCurrentUser().getUid()).setValue(user).addOnCompleteListener(new OnCompleteListener<Void>() {
                                     @Override
@@ -78,6 +117,7 @@ public class RegisterActivity extends AppCompatActivity {
                                             Toast.makeText(RegisterActivity.this, "Register Successfully!", Toast.LENGTH_LONG).show();
                                             FirebaseAuth.getInstance().signOut();
                                             startActivity(new Intent(RegisterActivity.this, LoginActivity.class));
+                                            finish();
                                         }else{
 
                                         }
@@ -95,9 +135,12 @@ public class RegisterActivity extends AppCompatActivity {
     }
 
     private boolean vaildateEmail(){
-        String inputEmail = etxtEmail.getText().toString();
+        String inputEmail = etxtEmail.getText().toString().trim();
         if(inputEmail.isEmpty() ){
-            etxtEmail.setError("Enter a Email");
+            etxtEmail.setError("Please input a Email");
+            return false;
+        }else if (!android.util.Patterns.EMAIL_ADDRESS.matcher(inputEmail).matches()){
+            etxtEmail.setError("Please input a valid Email");
             return false;
         }else{
             etxtEmail.setError(null);
@@ -105,23 +148,23 @@ public class RegisterActivity extends AppCompatActivity {
         }
     }
     private boolean vaildatePassword(){
-        String inputPassword = etxtPwd.getText().toString();
+        String inputPassword = etxtPwd.getText().toString().trim();
         if(inputPassword.isEmpty() ){
             etxtPwd.setError("Please Enter Password");
             return false;
         }else if(inputPassword.length()<6){
             etxtPwd.setError("Enter at least 6 character for your password");
             return false;
-        }else{
+        }else {
             etxtPwd.setError(null);
             return true;
         }
     }
 
     private boolean validateFirstName(){
-        String inputFirstName = etxtFirstname.getText().toString();
+        String inputFirstName = etxtFirstname.getText().toString().trim();
         if (inputFirstName.isEmpty()){
-            etxtFirstname.setError("Enter first name");
+            etxtFirstname.setError("Please input your first name");
             return false;
         }else {
             etxtFirstname.setError(null);
@@ -130,9 +173,9 @@ public class RegisterActivity extends AppCompatActivity {
     }
 
     private boolean validateLastName(){
-        String inputLastName = etxtLastname.getText().toString();
+        String inputLastName = etxtLastname.getText().toString().trim();
         if (inputLastName.isEmpty()){
-            etxtLastname.setError("Enter last name");
+            etxtLastname.setError("Please input your last name");
             return false;
         }else {
             etxtLastname.setError(null);
@@ -141,15 +184,25 @@ public class RegisterActivity extends AppCompatActivity {
     }
 
     private boolean validatePhone(){
-        String inputPhone = etxtPhone.getText().toString();
+        String inputPhone = etxtPhone.getText().toString().trim();
         if (inputPhone.isEmpty()){
-            etxtPhone.setError("Enter phone number");
+            etxtPhone.setError("Please input phone number");
             return false;
         }else if(etxtPhone.length() != 8){
-            etxtPhone.setError("Enter phone number with 8 number");
+            etxtPhone.setError("Please input phone number within 8 number");
             return false;
         }else {
             etxtPhone.setError(null);
+            return true;
+        }
+    }
+
+    private boolean vaildateUsername(){
+        String inputUser = etUsername.getText().toString().trim().trim();
+        if (inputUser.length() < 3 || inputUser.isEmpty()){
+            etUsername.setError("Please input at lease 3 character of Username");
+            return false;
+        }else {
             return true;
         }
     }

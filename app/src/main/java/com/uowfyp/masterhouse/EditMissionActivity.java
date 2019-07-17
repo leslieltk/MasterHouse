@@ -1,8 +1,10 @@
 package com.uowfyp.masterhouse;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.os.Bundle;
@@ -11,6 +13,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -66,6 +69,7 @@ public class EditMissionActivity extends AppCompatActivity {
         postReff.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists()){
                 missionPost = dataSnapshot.getValue(MissionPost.class);
                 etTitle.setText(missionPost.getTitle());
                 etDescription.setText(missionPost.getDescription());
@@ -91,6 +95,7 @@ public class EditMissionActivity extends AppCompatActivity {
 
                 etPrice.setText(missionPost.getPrice());
 
+                }
             }
 
             @Override
@@ -132,7 +137,28 @@ public class EditMissionActivity extends AppCompatActivity {
                     Intent intent = new Intent(EditMissionActivity.this, PostDetailActivity.class);
                     intent.putExtra("postKey", postKey);
                     startActivity(intent);
+                    finish();
                 }
+
+            }
+        });
+
+        btnDelete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                new AlertDialog.Builder(EditMissionActivity.this)
+                        .setTitle("Confirm")
+                        .setMessage("Do you really want to Deleter this Mission Post?")
+                        .setIcon(android.R.drawable.ic_dialog_alert)
+                        .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+
+                            public void onClick(DialogInterface dialog, int whichButton) {
+                                postReff.removeValue();
+                                Intent intent1 = new Intent(EditMissionActivity.this, MainActivity.class);
+                                startActivity(intent1);
+                                finish();
+                            }})
+                        .setNegativeButton(android.R.string.no, null).show();
 
             }
         });

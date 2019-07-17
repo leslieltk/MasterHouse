@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.devs.readmoreoption.ReadMoreOption;
 import com.google.firebase.database.DatabaseReference;
@@ -42,7 +43,9 @@ public class RecycleViewAdapter extends RecyclerView.Adapter<RecycleViewAdapter.
         viewHolder.postTitle.setText(list.get(position).getTitle());
         viewHolder.postDesc.setText(list.get(position).getDescription());
         viewHolder.postSubTitle.setText((list.get(position).getDate()));
-        ReadMoreOption readMoreOption = new ReadMoreOption.Builder(mcontext)
+        viewHolder.tvPrice.setText("$ " +(list.get(position).getPrice())+ " " +(list.get(position).getPriceType()));
+
+        ReadMoreOption readMoreOption = new ReadMoreOption.Builder(mcontext)    // readmore function to show less on default
                 .moreLabel("Show More")
                 .lessLabel("Show Less")
                 .moreLabelColor(Color.RED)
@@ -55,6 +58,17 @@ public class RecycleViewAdapter extends RecyclerView.Adapter<RecycleViewAdapter.
                 .moreLabel("")
                 .build();
         readMoreOption2.addReadMoreTo(viewHolder.postTitle,list.get(position).getTitle());
+
+
+//        if(list.get(position).islike == true){
+//            viewHolder.btnlike.setBackgroundResource(R.drawable.ic_favorite_red_600_24dp);
+//        }
+//        viewHolder.btnlike.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//
+//            }
+//        });
 
 
     }
@@ -70,7 +84,7 @@ public class RecycleViewAdapter extends RecyclerView.Adapter<RecycleViewAdapter.
 
     class viewHolder extends RecyclerView.ViewHolder {
         CardView parentLayout;
-        TextView postTitle, postDesc, postSubTitle, postUsername;
+        TextView postTitle, postDesc, postSubTitle, postUsername, tvPrice;
         Button btnlike;
 
         public viewHolder(@NonNull View itemView) {
@@ -80,11 +94,10 @@ public class RecycleViewAdapter extends RecyclerView.Adapter<RecycleViewAdapter.
             postDesc = (TextView) itemView.findViewById(R.id.postDesc);
             postSubTitle = (TextView)itemView.findViewById(R.id.postDate);
             parentLayout = (CardView)itemView.findViewById(R.id.parent_layout);
-            btnlike = (Button)itemView.findViewById(R.id.btnslike);
+            tvPrice = (TextView)itemView.findViewById(R.id.tvCardPrice);
+//            btnlike = (Button)itemView.findViewById(R.id.btnslike);
             itemView.setTag(this);
             itemView.setOnClickListener(mOnItemClickListener);
-            btnlike.setTag(this);
-            btnlike.setOnClickListener(mOnItemClickListener);
 
         }
     }

@@ -68,6 +68,9 @@ public class UserApplied extends Fragment {
                                         if (dsnap2.child("uid").getValue().toString().equals(dsnap3.getKey())){
                                             missionPost.setUsername(dsnap3.child("firstName").getValue().toString());
                                         }
+                                        if (dsnap3.child("likes").hasChild(dsnap2.getKey())){
+                                            missionPost.setIslike(true);
+                                        }
                                     }
                                     list.add(missionPost);
                                 }
@@ -97,7 +100,7 @@ public class UserApplied extends Fragment {
 
             missionPost = list.get(position);
             Intent intent = new Intent(getActivity(), PostDetailActivity.class);
-            intent.putExtra("key", missionPost.getKey()); // get the missionPost key from Firebase database and pass the key
+            intent.putExtra("postKey", missionPost.getKey()); // get the missionPost key from Firebase database and pass the key
             startActivity(intent);
         }
     };

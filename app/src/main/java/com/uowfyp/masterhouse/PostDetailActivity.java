@@ -1,8 +1,10 @@
 package com.uowfyp.masterhouse;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -37,6 +39,7 @@ public class PostDetailActivity extends AppCompatActivity {
     String time, s;
     MissionPost missionPost = new MissionPost();
     Date d1, d2;
+    boolean isbelong;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,9 +62,36 @@ public class PostDetailActivity extends AppCompatActivity {
         tvdate = (TextView)findViewById(R.id.tvdate);
         btnPostSetting = (Button)findViewById(R.id.btnPostSetting);
 
+        userReff.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                checkUserLiked(dataSnapshot);
+                if (dataSnapshot.child("posts").hasChild(postKey)){
+                    isbelong = true;
+
+                }else if (dataSnapshot.child("applied").hasChild(postKey)){
+                    btnApply.setText("Cancel");
+                    btnApply.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            cancelApply();
+                        }
+                    });
+                }else {
+                    isbelong = false;
+                }
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
+
         postReff.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists()){
                 missionPost = dataSnapshot.getValue(MissionPost.class);
                 try {
                     d1 = dateFormat.parse(dataSnapshot.child("date").getValue().toString());
@@ -76,14 +106,14 @@ public class PostDetailActivity extends AppCompatActivity {
                 }
                 postDerailDisplay(dataSnapshot);
                 enableSetting(missionPost.getUid());
-
+                countApplicant(dataSnapshot);
+                }
             }
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
 
             }
         });
-
 
         btnPostSetting.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -94,28 +124,10 @@ public class PostDetailActivity extends AppCompatActivity {
             }
         });
 
-        userReff.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                checkUserLiked(dataSnapshot);
-            }
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
-
         btnlike.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 likeClicked();
-            }
-        });
-
-        btnApply.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                applyClicked();
             }
         });
     };
@@ -143,6 +155,15 @@ public class PostDetailActivity extends AppCompatActivity {
                 btnlike.setBackgroundResource(R.drawable.ic_favorite_red_600_24dp);
                 btnlike.setText("like");
             }
+
+        }
+    }
+
+    private  void  countApplicant(DataSnapshot dataSnapshot){
+        if (isbelong == true){
+            long temp = dataSnapshot.child("applied").getChildrenCount();
+            String text = String.valueOf(temp);
+            btnApply.setText(text + " Applicant");
         }
     }
 
@@ -150,6 +171,26 @@ public class PostDetailActivity extends AppCompatActivity {
         postReff.child("applicant").child(auth.getCurrentUser().getUid()).setValue(currentTime);
         userReff.child("applied").child(postKey).setValue(currentTime);
         Toast.makeText(PostDetailActivity.this, "Apply a Mission", Toast.LENGTH_SHORT).show();
+    }
+
+    private void cancelApply(){
+        new AlertDialog.Builder(PostDetailActivity.this)
+                .setTitle("Confirm!")
+                .setMessage("Do you really want to Cancel this Mission Post?")
+                .setIcon(android.R.drawable.ic_dialog_alert)
+                .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+
+                    public void onClick(DialogInterface dialog, int whichButton) {
+                        postReff.child("applicant").child(auth.getCurrentUser().getUid()).removeValue();
+                        userReff.child("applied").child(postKey).removeValue();
+
+                    }})
+                .setNegativeButton(android.R.string.no, null).show();
+
+    }
+
+    private void checkApply(){
+
     }
 
 
