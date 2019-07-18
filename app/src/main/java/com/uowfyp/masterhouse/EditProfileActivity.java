@@ -2,9 +2,16 @@ package com.uowfyp.masterhouse;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import android.os.Bundle;
-import android.widget.EditText;
 
+import android.content.res.Resources;
+import android.os.Bundle;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ProgressBar;
+import android.widget.Spinner;
+import android.widget.TextView;
+
+import com.firebase.ui.auth.data.model.Resource;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -14,17 +21,38 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 public class EditProfileActivity extends AppCompatActivity {
-    FirebaseAuth auth;
+
+    FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
     DatabaseReference userreff;
-    EditText fname, lname;
+    EditText etEmail, etPwd, etFirstname, etLastname, etPhone, etUsername;
+    Spinner spinnerGender;
+    Button btnNext, btnbirthday;
+    TextView title;
+    User user;
+    String[] gender;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_edit_profile);
+        setContentView(R.layout.activity_register);
 
-        fname = (EditText)findViewById(R.id.editfName);
-        lname = (EditText)findViewById(R.id.editlName);
+        Resources res = getResources();
+        gender = res.getStringArray(R.array.gender);
+
+        etFirstname = (EditText)findViewById(R.id.etFirstname);
+        etLastname = (EditText)findViewById(R.id.etLastname);
+        etPhone = (EditText)findViewById(R.id.etxtPhone);
+        etEmail = (EditText)findViewById(R.id.etxtEmail2);
+        etPwd = (EditText)findViewById(R.id.etxtPwd2);
+        btnNext = (Button)findViewById(R.id.btnRegister);
+        etUsername = (EditText)findViewById(R.id.etUsername);
+        spinnerGender = (Spinner)findViewById(R.id.spinnerGender);
+        btnbirthday = (Button)findViewById(R.id.btnbirthday);
+        title = (TextView)findViewById(R.id.register_title);
+        user = new User();
+
+        title.setText("Profile Edited Page");
+        btnNext.setText("SAVE");
 
         FirebaseUser authuser = FirebaseAuth.getInstance().getCurrentUser();
         if (authuser != null) {
@@ -34,11 +62,20 @@ public class EditProfileActivity extends AppCompatActivity {
             userreff.addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                    String firstName = dataSnapshot.child("firstName").getValue().toString();
-                    String lastName = dataSnapshot.child("lastName").getValue().toString();
+                    user = dataSnapshot.getValue(User.class);
 
-                    fname.setText(firstName);
-                    lname.setText(lastName);
+                    etFirstname.setText(user.getFirstName());
+                    etLastname.setText(user.getLastName());
+                    etUsername.setText(user.getUsername());
+                    for (int i = 0; i<gender.length; i++){
+                        if(gender[i].equals(user.getGender())){
+                            spinnerGender.setSelection(i);
+                        }
+                    }
+                    btnbirthday.setClickable(false);
+                    btnbirthday.setText(user.getBirhtdate());
+                    etPhone.setText(user.getPhone());
+                    etEmail.setText(user.getEmail());
                 }
 
                 @Override

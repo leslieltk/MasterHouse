@@ -96,6 +96,9 @@ public class LoginActivity extends AppCompatActivity {
         if(inputEmail.isEmpty() ){
             txtEmail.setError("Please Enter Email");
             return false;
+        }else if (!android.util.Patterns.EMAIL_ADDRESS.matcher(inputEmail).matches()){
+            txtEmail.setError("Please input a valid Email");
+            return false;
         }else{
             txtEmail.setError(null);
             return true;
