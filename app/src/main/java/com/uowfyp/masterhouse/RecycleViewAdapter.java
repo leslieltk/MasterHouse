@@ -42,7 +42,7 @@ public class RecycleViewAdapter extends RecyclerView.Adapter<RecycleViewAdapter.
         viewHolder.postUsername.setText(list.get(position).getUsername());
         viewHolder.postTitle.setText(list.get(position).getTitle());
         viewHolder.postDesc.setText(list.get(position).getDescription());
-        viewHolder.postSubTitle.setText((list.get(position).getDate()));
+        viewHolder.postSubTitle.setText((list.get(position).getCreateDate()));
         viewHolder.tvPrice.setText("$ " +(list.get(position).getPrice())+ " " +(list.get(position).getPriceType()));
 
         ReadMoreOption readMoreOption = new ReadMoreOption.Builder(mcontext)    // readmore function to show less on default

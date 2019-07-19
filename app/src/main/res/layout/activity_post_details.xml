@@ -48,10 +48,10 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="16dp"
-                            android:layout_marginTop="16dp"
+                            android:layout_marginTop="24dp"
                             android:text="TitleData"
-                            android:textSize="18sp"
-                            app:layout_constraintStart_toStartOf="parent"
+                            android:textSize="20sp"
+                            app:layout_constraintStart_toEndOf="@+id/imageView11"
                             app:layout_constraintTop_toBottomOf="@+id/constraintLayout3" />
 
                         <TextView
@@ -78,7 +78,7 @@
                             app:layout_constraintTop_toTopOf="parent" />
 
                         <TextView
-                            android:id="@+id/textView10"
+                            android:id="@+id/tvuserName"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="8dp"
@@ -92,7 +92,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="2dp"
                             android:layout_marginStart="8dp"
-                            android:layout_marginTop="16dp"
+                            android:layout_marginTop="24dp"
                             android:layout_marginEnd="8dp"
                             android:background="@color/colorPrimary"
                             app:layout_constraintEnd_toEndOf="parent"
@@ -106,7 +106,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="16dp"
-                            android:layout_marginTop="16dp"
+                            android:layout_marginTop="20dp"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toBottomOf="@+id/postTitle"
                             app:srcCompat="@drawable/ic_time" />
@@ -117,7 +117,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="16dp"
                             app:layout_constraintStart_toStartOf="@+id/imageView3"
-                            app:layout_constraintTop_toBottomOf="@+id/imageView3"
+                            app:layout_constraintTop_toBottomOf="@+id/tvStartTime"
                             app:srcCompat="@drawable/ic_money" />
 
                         <ImageView
@@ -148,13 +148,13 @@
                             app:srcCompat="@drawable/ic_category" />
 
                         <TextView
-                            android:id="@+id/tvdate"
+                            android:id="@+id/tvCreatedate"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginStart="16dp"
+                            android:layout_marginTop="8dp"
                             android:text="TextView"
-                            app:layout_constraintStart_toEndOf="@+id/imageView3"
-                            app:layout_constraintTop_toTopOf="@+id/imageView3" />
+                            app:layout_constraintStart_toStartOf="@+id/tvuserName"
+                            app:layout_constraintTop_toBottomOf="@+id/tvuserName" />
 
                         <TextView
                             android:id="@+id/tvsalary"
@@ -194,6 +194,69 @@
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintTop_toTopOf="parent" />
 
+                        <ImageView
+                            android:id="@+id/imageView11"
+                            android:layout_width="24dp"
+                            android:layout_height="24dp"
+                            android:layout_marginStart="16dp"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="@+id/postTitle"
+                            app:srcCompat="@drawable/logo" />
+
+                        <TextView
+                            android:id="@+id/tvStartDate"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="16dp"
+                            android:text="TextView"
+                            app:layout_constraintStart_toEndOf="@+id/imageView3"
+                            app:layout_constraintTop_toTopOf="@+id/imageView3" />
+
+                        <TextView
+                            android:id="@+id/tvEndDate"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="8dp"
+                            android:text="TextView"
+                            app:layout_constraintStart_toEndOf="@+id/textView7"
+                            app:layout_constraintTop_toTopOf="@+id/tvStartDate" />
+
+                        <TextView
+                            android:id="@+id/tvStartTime"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="16dp"
+                            android:text="TextView"
+                            app:layout_constraintStart_toStartOf="@+id/tvStartDate"
+                            app:layout_constraintTop_toBottomOf="@+id/imageView3" />
+
+                        <TextView
+                            android:id="@+id/tvEndTime"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="8dp"
+                            android:text="TextView"
+                            app:layout_constraintStart_toEndOf="@+id/textView"
+                            app:layout_constraintTop_toTopOf="@+id/tvStartTime" />
+
+                        <TextView
+                            android:id="@+id/textView"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="8dp"
+                            android:text="To"
+                            app:layout_constraintStart_toEndOf="@+id/tvStartTime"
+                            app:layout_constraintTop_toTopOf="@+id/tvStartTime" />
+
+                        <TextView
+                            android:id="@+id/textView7"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="8dp"
+                            android:text="To"
+                            app:layout_constraintStart_toEndOf="@+id/tvStartDate"
+                            app:layout_constraintTop_toTopOf="@+id/tvStartDate" />
+
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
                 </LinearLayout>
@@ -202,15 +265,16 @@
         </androidx.cardview.widget.CardView>
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <Button
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/postApply"
+        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
         android:layout_width="232dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="16dp"
         android:text="Apply"
+        android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/btnlike" />

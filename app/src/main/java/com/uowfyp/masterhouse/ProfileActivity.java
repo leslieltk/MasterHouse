@@ -30,7 +30,7 @@ public class ProfileActivity extends Fragment {
 
     private static final String TAG = "ProfileActivity-Log";
 
-    TextView tvEmail, tvName, tvDate;
+    TextView tvEmail, tvName, tvCreatedate;
     Button btnlogout, btnsetting;
     ProgressBar loading;
     FirebaseAuth auth;
@@ -48,7 +48,7 @@ public class ProfileActivity extends Fragment {
         tvName = (TextView) rootView.findViewById(R.id.tvname);
         btnlogout = (Button) rootView.findViewById(R.id.btnlogout);
         loading = (ProgressBar) rootView.findViewById(R.id.loading2);
-        tvDate = (TextView) rootView.findViewById(R.id.tvdate);
+        tvCreatedate = (TextView) rootView.findViewById(R.id.tvCreatedate);
         btnsetting = (Button)rootView.findViewById(R.id.btn_setting);
 
         ViewPager mViewPager = (ViewPager) rootView.findViewById(R.id.viewpager);
@@ -69,12 +69,12 @@ public class ProfileActivity extends Fragment {
             dbreff.addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                    String firstName = dataSnapshot.child("firstName").getValue().toString();
-                    String lastName = dataSnapshot.child("lastName").getValue().toString();
-                    firstName = firstName.toUpperCase();
-                    lastName = lastName.toUpperCase();
-                    tvName.setText(firstName + " " + lastName);
+                    String username = dataSnapshot.child("username").getValue().toString();
+                    String createDate = dataSnapshot.child("createDate").getValue().toString();
+
+                    tvName.setText(username );
                     tvName.setTextSize(20);
+                    tvCreatedate.setText("Joined at " + createDate);
                 }
 
                 @Override

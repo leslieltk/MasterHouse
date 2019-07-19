@@ -64,6 +64,7 @@
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btnLogin"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="64dp"
@@ -71,7 +72,7 @@
             android:layout_marginEnd="64dp"
             android:background="@drawable/round_button"
             android:text="Login"
-            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+            android:textSize="18sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/txtlayoutpassword" />
@@ -87,6 +88,7 @@
             android:layout_marginEnd="64dp"
             android:background="@drawable/round_button"
             android:text="Register"
+            android:textSize="18sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/btnLogin" />

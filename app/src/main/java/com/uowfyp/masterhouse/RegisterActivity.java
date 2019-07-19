@@ -42,7 +42,7 @@ public class RegisterActivity extends AppCompatActivity {
     ProgressDialog progressDialog;
     User user;
     Calendar calendar = Calendar.getInstance();
-    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+    SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
     final String currentTime = dateFormat.format(calendar.getTime());
     DatePickerDialog.OnDateSetListener listener;
     String date;
@@ -60,7 +60,7 @@ public class RegisterActivity extends AppCompatActivity {
         etLastname = (EditText)findViewById(R.id.etLastname);
         etPhone = (EditText)findViewById(R.id.etxtPhone);
         etEmail = (EditText)findViewById(R.id.etxtEmail2);
-        etPwd = (EditText)findViewById(R.id.etxtPwd2);
+        etPwd = (EditText)findViewById(R.id.etPwd2);
         btnNext = (Button)findViewById(R.id.btnRegister);
         loading = (ProgressBar)findViewById(R.id.loading2);
         etUsername = (EditText)findViewById(R.id.etUsername);
@@ -158,7 +158,7 @@ public class RegisterActivity extends AppCompatActivity {
                                                 user.setUsername(username);
                                                 user.setCreateDate(currentTime);
                                                 user.setGender(gender);
-                                                user.setBirhtdate(birhday);
+                                                user.setBirthday(birhday);
 
                                                 FirebaseDatabase.getInstance().getReference("Users").child(auth.getCurrentUser().getUid()).setValue(user).addOnCompleteListener(new OnCompleteListener<Void>() {
                                                     @Override

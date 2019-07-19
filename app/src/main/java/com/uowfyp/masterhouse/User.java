@@ -5,7 +5,7 @@ public class User {
   public String lastName;
   public String username;
   public String email;
-  public String birhtdate;
+  public String birthday;
   public String phone;
   public String gender;
   public String img;
@@ -47,12 +47,12 @@ public class User {
         this.email = email;
     }
 
-    public String getBirhtdate() {
-        return birhtdate;
+    public String getBirthday() {
+        return birthday;
     }
 
-    public void setBirhtdate(String birhtdate) {
-        this.birhtdate = birhtdate;
+    public void setBirthday(String birthday) {
+        this.birthday = birthday;
     }
 
     public String getPhone() {

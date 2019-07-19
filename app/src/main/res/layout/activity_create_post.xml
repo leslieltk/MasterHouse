@@ -45,9 +45,9 @@
             android:id="@+id/tvTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
+            android:layout_marginStart="16dp"
             android:layout_marginTop="32dp"
-            android:layout_marginEnd="8dp"
+            android:layout_marginEnd="16dp"
             android:text="New Mission Details"
             android:textSize="18sp"
             app:layout_constraintEnd_toEndOf="parent"
@@ -59,7 +59,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="24dp"
-            android:layout_marginTop="24dp"
+            android:layout_marginTop="16dp"
             android:entries="@array/category"
             android:spinnerMode="dropdown"
             app:layout_constraintStart_toEndOf="@+id/textView8"
@@ -80,7 +80,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
-            android:layout_marginTop="32dp"
+            android:layout_marginTop="24dp"
             android:text="Location: "
             android:textSize="18sp"
             app:layout_constraintStart_toStartOf="parent"
@@ -99,12 +99,15 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
-            android:layout_marginTop="24dp"
+            android:layout_marginTop="16dp"
             android:layout_marginEnd="8dp"
             android:hint="Price"
+            app:hintEnabled="true"
             app:layout_constraintEnd_toStartOf="@+id/spinnerPriceType"
+            app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/spinnerLocation">
+            app:layout_constraintTop_toBottomOf="@+id/btnStartTime"
+            app:startIconDrawable="@drawable/ic_money">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/etPrice"
@@ -151,7 +154,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
-            android:layout_marginTop="32dp"
+            android:layout_marginTop="16dp"
             android:layout_marginEnd="8dp"
             android:text="Sumbit"
             app:layout_constraintEnd_toEndOf="parent"
@@ -165,14 +168,75 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:layout_marginEnd="8dp"
-            android:layout_marginBottom="24dp"
+            android:layout_marginBottom="8dp"
             android:backgroundTint="#E91E63"
             android:text="Delete"
-            android:visibility="gone"
+            android:visibility="visible"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.498"
             app:layout_constraintStart_toStartOf="parent" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnStartDate"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="16dp"
+            android:text="Start Date"
+            app:layout_constraintStart_toEndOf="@+id/textView6"
+            app:layout_constraintTop_toBottomOf="@+id/spinnerLocation" />
+
+        <TextView
+            android:id="@+id/textView6"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="24dp"
+            android:text="Date:"
+            android:textSize="18sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView9" />
+
+        <TextView
+            android:id="@+id/tvEndDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:text="Time:"
+            android:textSize="18sp"
+            app:layout_constraintStart_toStartOf="@+id/textView6"
+            app:layout_constraintTop_toBottomOf="@+id/btnStartDate" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnStartTime"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="Start Time"
+            app:layout_constraintStart_toStartOf="@+id/btnStartDate"
+            app:layout_constraintTop_toBottomOf="@+id/btnStartDate" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnEndDate"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:text="End Date"
+            app:layout_constraintStart_toEndOf="@+id/btnStartDate"
+            app:layout_constraintTop_toTopOf="@+id/btnStartDate" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnEndTime"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="End Time"
+            app:layout_constraintStart_toStartOf="@+id/btnEndDate"
+            app:layout_constraintTop_toTopOf="@+id/btnStartTime" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -5,13 +5,12 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.res.Resources;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TextView;
 
-import com.firebase.ui.auth.data.model.Resource;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -43,7 +42,7 @@ public class EditProfileActivity extends AppCompatActivity {
         etLastname = (EditText)findViewById(R.id.etLastname);
         etPhone = (EditText)findViewById(R.id.etxtPhone);
         etEmail = (EditText)findViewById(R.id.etxtEmail2);
-        etPwd = (EditText)findViewById(R.id.etxtPwd2);
+        etPwd = (EditText)findViewById(R.id.etPwd2);
         btnNext = (Button)findViewById(R.id.btnRegister);
         etUsername = (EditText)findViewById(R.id.etUsername);
         spinnerGender = (Spinner)findViewById(R.id.spinnerGender);
@@ -72,10 +71,11 @@ public class EditProfileActivity extends AppCompatActivity {
                             spinnerGender.setSelection(i);
                         }
                     }
+                    btnbirthday.setText(user.getBirthday());
                     btnbirthday.setClickable(false);
-                    btnbirthday.setText(user.getBirhtdate());
                     etPhone.setText(user.getPhone());
                     etEmail.setText(user.getEmail());
+                    etPwd.setVisibility(View.GONE);
                 }
 
                 @Override

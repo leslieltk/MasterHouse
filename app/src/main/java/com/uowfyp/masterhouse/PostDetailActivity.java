@@ -30,11 +30,12 @@ public class PostDetailActivity extends AppCompatActivity {
 
     String postKey = null;
     DatabaseReference postReff, userReff;
-    TextView tvTitle, tvDesc, tvcategory, tvlocation, tvsalary, tvdate;
+    TextView tvTitle, tvDesc, tvcategory, tvlocation, tvsalary, tvdate, tvuserName, tvStartDate, tvStartTime, tvEndTime, tvEndDate;
     Button btnApply, btnlike, btnPostSetting;
     FirebaseAuth auth;
     Calendar calendar = Calendar.getInstance();
-    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+    SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+    SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm:ss");
     String currentTime = dateFormat.format(calendar.getTime());
     String time, s;
     MissionPost missionPost = new MissionPost();
@@ -59,17 +60,25 @@ public class PostDetailActivity extends AppCompatActivity {
         tvcategory = (TextView)findViewById(R.id.tvcategory);
         tvlocation = (TextView)findViewById(R.id.tvlocation);
         tvsalary = (TextView)findViewById(R.id.tvsalary);
-        tvdate = (TextView)findViewById(R.id.tvdate);
+        tvdate = (TextView)findViewById(R.id.tvCreatedate);
         btnPostSetting = (Button)findViewById(R.id.btnPostSetting);
+        tvuserName = (TextView)findViewById(R.id.tvuserName);
+
+        tvStartDate = (TextView)findViewById(R.id.tvStartDate);
+        tvStartTime = (TextView)findViewById(R.id.tvStartTime);
+        tvEndTime = (TextView)findViewById(R.id.tvEndTime);
+        tvEndDate = (TextView)findViewById(R.id.tvEndDate);
 
         userReff.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                tvuserName.setText(dataSnapshot.child("username").getValue().toString());
                 checkUserLiked(dataSnapshot);
                 if (dataSnapshot.child("posts").hasChild(postKey)){
                     isbelong = true;
 
                 }else if (dataSnapshot.child("applied").hasChild(postKey)){
+                    isbelong = false;
                     btnApply.setText("Cancel");
                     btnApply.setOnClickListener(new View.OnClickListener() {
                         @Override
@@ -79,6 +88,13 @@ public class PostDetailActivity extends AppCompatActivity {
                     });
                 }else {
                     isbelong = false;
+                    btnApply.setText("Apply");
+                    btnApply.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            applyClicked();
+                        }
+                    });
                 }
             }
             @Override
@@ -94,7 +110,7 @@ public class PostDetailActivity extends AppCompatActivity {
                 if (dataSnapshot.exists()){
                 missionPost = dataSnapshot.getValue(MissionPost.class);
                 try {
-                    d1 = dateFormat.parse(dataSnapshot.child("date").getValue().toString());
+                    d1 = dateFormat.parse(dataSnapshot.child("createDate").getValue().toString());
                     d2 = dateFormat.parse(currentTime);
                     long diff = d1.getTime() - d2.getTime();
                     long diffSeconds = diff / 1000;
@@ -189,18 +205,17 @@ public class PostDetailActivity extends AppCompatActivity {
 
     }
 
-    private void checkApply(){
-
-    }
-
-
     private void postDerailDisplay(DataSnapshot dataSnapshot){
         tvTitle.setText(missionPost.getTitle());
         tvDesc.setText(dataSnapshot.child("description").getValue().toString());
         tvcategory.setText(missionPost.getCategory());
         tvlocation.setText(missionPost.getLocation());
-        tvsalary.setText("$" + missionPost.getPrice());
-        tvdate.setText(missionPost.getDate());
+        tvsalary.setText("$" + missionPost.getPrice() + " " + missionPost.getPriceType());
+        tvdate.setText(missionPost.getCreateDate());
+        tvStartDate.setText(missionPost.getStartDate());
+        tvStartTime.setText(missionPost.getStartTime());
+        tvEndDate.setText(missionPost.getEndDate());
+        tvEndTime.setText(missionPost.getEndTime());
 
     }
 
